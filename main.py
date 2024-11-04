@@ -9,10 +9,11 @@ xn = x0
 n = 1000
 delta_r = 0.001
 
-r_vs_lamb = graph(title="r vs lyapunov exponent", xtitle="r", ytitle="lyapunov exponent", ymin=-2, ymax=1, xmin=.7)
-exponents = gdots(graph=r_vs_lamb, size=.5)
+r_vs_lamb = graph(title="r vs lyapunov exponent", xtitle="r", ytitle="lyapunov exponent", ymin=-2, ymax=1, xmin=0)
+exponents_pos = gdots(graph=r_vs_lamb, size=.5, color=color.green)
+exponents_neg = gdots(graph=r_vs_lamb, size=.5, color=color.blue)
 
-for r in range(0, 4, delta_r):
+for r in range(0, 4.001, delta_r):
     def der(xn):
         return r * (1 - 2 * xn)
     
@@ -24,4 +25,8 @@ for r in range(0, 4, delta_r):
         lamb += log(abs(der(xn))) 
     
     lamb /= n
-    exponents.plot(r, lamb)
+    
+    if lamb > 0:
+        exponents_pos.plot(r, lamb)
+    else:
+        exponents_neg.plot(r, lamb)
