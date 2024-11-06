@@ -32,6 +32,51 @@ for r in range(0, 4.001, delta_r):
         exponents_neg.plot(r, lamb)
 
 
+# Lyapanov exponent for the Lorenz equations
+sigma = 8.5
+rho = 24
+beta = 8 / 3
+
+x, y, z, delta_t, num_steps = 1, 1, 1, 0.01, 10000
+
+path = sphere(pos=vector(x,y,z), radius=.1, make_trail=True, trail_radius=.1)
+lorenz = graph(title="Lorenz Coordinates")
+lorenz_x_curve = gcurve(graph=lorenz, color=color.green, label="X")
+lorenz_y_curve = gcurve(graph=lorenz, color=color.blue, label="Y")
+lorenz_z_curve = gcurve(graph=lorenz, color=color.red, label="Z")
+
+lamb_x, lamb_y, lamb_z = 0, 0, 0
+
+for i in range(num_steps):
+    rate(50)
+    
+    dxdt = sigma * (y - x)
+    dydt = x * (rho - z) - y
+    dzdt = x * y - beta * z
+    
+    x += dxdt * delta_t
+    y += dydt * delta_t
+    z += dzdt * delta_t
+    
+    lamb_x += log(abs(dxdt))
+    lamb_y += log(abs(dydt))
+    lamb_z += log(abs(dzdt))
+    
+    path.pos = vector(x, y, z)
+    
+    lorenz_x_curve.plot(i, x)
+    lorenz_y_curve.plot(i, y)
+    lorenz_z_curve.plot(i, z)
+
+
+lamb_x /= num_steps
+lamb_y /= num_steps
+lamb_z /= num_steps
+
+print(lamb_x, lamb_y, lamb_z)
+
+### END OF LORENZ
+
 ##simple harmonic oscillator
 ##plan: want to graph seperation (or the equations of the two functions) over time and on the same graph and print the lyapunov exponent
 
