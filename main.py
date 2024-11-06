@@ -30,3 +30,15 @@ for r in range(0, 4.001, delta_r):
         exponents_pos.plot(r, lamb)
     else:
         exponents_neg.plot(r, lamb)
+
+
+##simple harmonic oscillator
+##plan: want to graph seperation (or the equations of the two functions) over time and on the same graph and print the lyapunov exponent
+
+
+simple_harmonic_oscillator = graph(title = "Lyapunov Exponent of a Simple Harmonic Osicllator", xtitle = "time", ytitle = "xcor")
+
+
+oscillator_1 = 
+
+##feigenbaum ratio 
