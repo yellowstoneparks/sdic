@@ -77,13 +77,41 @@ print(lamb_x, lamb_y, lamb_z)
 
 ### END OF LORENZ
 
+
+
 ##simple harmonic oscillator
 ##plan: want to graph seperation (or the equations of the two functions) over time and on the same graph and print the lyapunov exponent
-
+##general equations:
+## 1. x(t) = Acos(omega * t + phi)          note: this equation is the solution to the one below
+## 2. second derivative of x with respect to time  + k/m (x) = 0        differential equation that we want to solve
 
 simple_harmonic_oscillator = graph(title = "Lyapunov Exponent of a Simple Harmonic Osicllator", xtitle = "time", ytitle = "xcor")
+oscillator1 = gcurve(graph = simple_harmonic_oscillator, color = color.red, label = "Oscillator 1's X Position")
+oscillator2 = gcurve(graph = simple_harmonic_oscillator, color = color.blue, label = "Oscillator 2's X Position")
+seperation_between_oscillators = gcurve(graph = simple_harmonic_oscillator, color = color.green, label = "Difference between X Position of Two Oscillators")
+##setting up graphs
+
+k = 200 ##spring constant
+mass = 60 ##mass of object on spring
+timestep = 0.1
+amplitude = 1
+phi1 = 0 
+phi2 = 0.1
+##above are different phi values that signal the change in initial conditions between the two simulations
+
+def omega():
+    return sqrt(k / mass)
+
+def harmonic_x_equation(t, phi): ##returns the x value at that specific time point
+    return amplitude * cos((omega() * t) + phi)
 
 
-oscillator_1 = 
+for i in range(0, 10, timestep):
+    oscillator1.plot(i, harmonic_x_equation(i, phi1))
+    oscillator2.plot(i, harmonic_x_equation(i, phi2))
+    
+    initial_seperation = harmonic_x_equation(0, phi1) - harmonic_x_equation(0,phi2)
+    seperation_between_oscillators.plot(i, harmonic_x_equation(i, (phi1 + phi2)/2)) 
+    ##will graph the growth rate of the seperation between the two simulations
 
 ##feigenbaum ratio 
