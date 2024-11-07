@@ -37,7 +37,7 @@ sigma = 8.5
 rho = 24
 beta = 8 / 3
 
-x, y, z, delta_t, num_steps = 1, 1, 1, 0.01, 10000
+x, y, z, delta_t, num_steps = 1, 1, 1, 0.01, 2000
 
 path = sphere(pos=vector(x,y,z), radius=.1, make_trail=True, trail_radius=.1)
 lorenz = graph(title="Lorenz Coordinates")
@@ -48,7 +48,7 @@ lorenz_z_curve = gcurve(graph=lorenz, color=color.red, label="Z")
 lamb_x, lamb_y, lamb_z = 0, 0, 0
 
 for i in range(num_steps):
-    rate(50)
+    rate(300)
     
     dxdt = sigma * (y - x)
     dydt = x * (rho - z) - y
