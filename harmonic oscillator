@@ -1,0 +1,73 @@
+Web VPython 3.2
+##simple harmonic oscillator
+##plan: want to graph seperation (or the equations of the two functions) over time and on the same graph and print the lyapunov exponent
+##general equations:
+## 1. x(t) = Acos(omega * t + phi)          note: this equation is the solution to the one below
+## 2. second derivative of x with respect to time  + k/m (x) = 0        differential equation that we want to solve
+## 3. lyapunov exponent = 1/t * lim t-> infinity (ln (seperation(t) - seperation(0)))
+
+simple_harmonic_oscillator = graph(title = "Lyapunov Exponent of a Simple Harmonic Osicllator", xtitle = "time", ytitle = "xcor")
+oscillator1 = gcurve(graph = simple_harmonic_oscillator, color = color.red, label = "Oscillator 1's X Position")
+oscillator2 = gcurve(graph = simple_harmonic_oscillator, color = color.blue, label = "Oscillator 2's X Position")
+seperation_between_oscillators = gcurve(graph = simple_harmonic_oscillator, color = color.green, label = "Difference between X Position of Two Oscillators")
+##setting up graphs
+
+phase = graph(title = "hi", xmin = -4, xmax = 4, ymin = -4, ymax = 4)
+phasediagrams1 = gcurve(graph = phase, color = color.red)
+phasediagrams2 = gcurve(graph = phase, color = color.blue)
+
+k = 200 ##spring constant
+mass = 200 ##mass of object on spring
+timestep = 0.1
+iterations = 10
+
+phi = 0
+lyapunov = []
+lyapunov_exponent = 0
+##above are different phi values that signal the change in initial conditions between the two simulations
+
+def omega():
+    return sqrt(k / mass)
+
+def harmonic_x_equation(amplitude, t, phi): ##returns the x value at that specific time point
+    return amplitude * cos((omega() * t) + phi)
+
+initial_seperation = harmonic_x_equation(1, 0, phi) - harmonic_x_equation(2, 0, phi)
+
+i = 0
+while i < iterations:
+##    seperation_equation = harmonic_x_equation(-2 * sin(0.1), i, 0.1)
+##    seperation_equation = harmonic_x_equation(initial_seperation, i, (phi1 + phi2) /2)
+    seperation_equation = harmonic_x_equation(1, i, phi) - harmonic_x_equation(2, i, phi)
+    ##growth rate of the seperation
+    
+    lyapunovv = log(seperation_equation / initial_seperation)
+#   lyapunov_for_each_t = 1/i * (log(abs(seperation_equation) / initial_seperation))
+    lyapunov.append(lyapunovv)
+    
+    if i <= 10: ##if there are too many iterates on the graph, it just bunches up
+        oscillator1.plot(i, harmonic_x_equation(1, i, phi))
+        oscillator2.plot(i, harmonic_x_equation(2, i, phi))
+        
+        seperation_between_oscillators.plot(i, seperation_equation) 
+        ##will graph the growth rate of the seperation between the two simulations
+
+#a diff method: 
+
+    if i > 0:
+        central_diff1 = (harmonic_x_equation(1, i+timestep, phi) - harmonic_x_equation(1, i-timestep, phi)) / (2 * timestep)
+        phasediagrams1.plot(harmonic_x_equation(1, i, phi), central_diff1)
+        
+        central_diff2 = (harmonic_x_equation(2, i+timestep, phi) - harmonic_x_equation(2, i-timestep, phi)) / (2 * timestep)
+        phasediagrams2.plot(harmonic_x_equation(2, i, phi), central_diff2)
+    
+    if i > (9.9): 
+        print(sum(lyapunov))
+#        print("The Lyapunov Exponent is " + round(lyapunov, 3))
+        print(sum(lyapunov) / (i / timestep)) ##provides seperation at t / initial -> SHOULD RETURN ~1
+#        print(log(abs(seperation_equation) / initial_seperation)) ##should be 0
+#        print(round(initial_seperation, 3)) ##provides initial seperation
+#        print(round(abs(seperation_equation), 3)) ##provides seperation at t
+    i += timestep
+
+##feigenbaum ratio 
