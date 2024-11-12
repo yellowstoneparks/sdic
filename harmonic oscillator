@@ -41,7 +41,7 @@ while i < iterations:
     seperation_equation = harmonic_x_equation(1, i, phi) - harmonic_x_equation(2, i, phi)
     ##growth rate of the seperation
     
-    lyapunovv = log(seperation_equation / initial_seperation)
+    lyapunovv = log(seperation_equation - initial_seperation)
 #   lyapunov_for_each_t = 1/i * (log(abs(seperation_equation) / initial_seperation))
     lyapunov.append(lyapunovv)
     
@@ -54,7 +54,7 @@ while i < iterations:
 
 #a diff method: 
 
-    if i > 0:
+    if i > 0: ##velocity for phase diagrams
         central_diff1 = (harmonic_x_equation(1, i+timestep, phi) - harmonic_x_equation(1, i-timestep, phi)) / (2 * timestep)
         phasediagrams1.plot(harmonic_x_equation(1, i, phi), central_diff1)
         
