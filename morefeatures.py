@@ -59,7 +59,7 @@ def calclyapunov(start,end,Ymin,Ymax,iscurve):
 # initial lyapunov calc
 calclyapunov(0,4,-1,1,0)
 
-endlist = endlist[1:]
+endlist = endlist[1:] # had to remove first since it was faulty
 print("Starts of Island of Stability: ",startlist)
 print("Ends of Island of Stability: ",endlist)
 
@@ -72,7 +72,7 @@ def island(evt):
     global ponr, exponents_pos, exponents_neg, r_vs_lamb, index
     if startlist and endlist and index < len(startlist):
         print("Islands of Stability - Start:", startlist[index], "End:", endlist[index])
-        calclyapunov(startlist[index]-0.01, endlist[index]+0.01,-0.5,0.5,1)
+        calclyapunov(startlist[index]-0.01, endlist[index]+0.01,-0.5,0.5,1) # extra space of 0.01 to allow room to see
     else:
         print("End of Islands of Stability")
     index += 1
