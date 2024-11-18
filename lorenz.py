@@ -12,7 +12,7 @@ beta_range = (2.6, 2.8)
 delta_t = 0.001
 num_steps = 100 * 1000
 d = 1e-5
-lorenz = graph(title="Lorenz Coordinates")
+lorenz = graph(title="Lorenz Coordinates", xtitle="Time", ytitle="Position")
 
 parameters = []
 
