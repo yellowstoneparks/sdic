@@ -16,6 +16,7 @@ lorenz = graph(title="Lorenz Coordinates")
 
 parameters = []
 
+# making sure that the graph colors are unique
 def similarColor(v1, v2, thres=.9):
     return thres > sqrt((v1.x - v2.x)**2 +
                         (v1.y - v2.y)**2 +
@@ -29,6 +30,7 @@ while not similarColor(ys, xs): ys = vector(random(), random(), random())
 zs = vector(random(), random(), random())
 while not similarColor(ys, zs) and not similarColor(xs, zs): zs = vector(random(), random(), random())
 
+# defining the gcurves
 temp1 = gcurve(graph=lorenz, color=xs, label="X")
 temp2 = gcurve(graph=lorenz, color=ys, label="Y")
 temp3 = gcurve(graph=lorenz, color=zs, label="Z")
@@ -56,7 +58,9 @@ for _ in range(num_instances):
     
 for i in range(num_steps):
     rate(900)
+    # for each curve...
     for param in parameters:
+        # get the vars...
         sigma = param["sigma"]
         rho = param["rho"]
         beta = param["beta"]
@@ -64,7 +68,7 @@ for i in range(num_steps):
         x_prime, y_prime, z_prime = param["x_prime"], param["y_prime"], param["z_prime"]
         diff_0 = param["diff_0"]
 
-        # Calculating the d_/dt for each coord
+        # Calculating the d_/dt for each coord...
         dxdt = sigma * (y - x)
         dydt = x * (rho - z) - y
         dzdt = x * y - beta * z
