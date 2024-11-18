@@ -55,7 +55,7 @@ for _ in range(num_instances):
     parameters.append(one_instance)
     
 for i in range(num_steps):
-    rate(9000)
+    rate(900)
     for param in parameters:
         sigma = param["sigma"]
         rho = param["rho"]
